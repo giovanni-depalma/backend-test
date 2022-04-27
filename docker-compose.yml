@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  pupil-db:
+    image: mongo
+    container_name: pupil-db
+    ports:
+      - "27017:27017"
