@@ -3,6 +3,38 @@ server:
   servlet:
     context-path: /
 
+is:
+  base-url: ${IS_PROTOCOL:http}://${IS_HOST:localhost}:${IS_PORT:8080}
+  realm: ${IS_REALM:test}
+  realm-url: ${is.base-url}/realms/${is.realm}
+  client-id: test-gateway
+  client-secret: UqfVKfO5ReJoDjjZgW24ITdj8WUoHbel
+  external-base-url: ${EXTERNAL_PROTOCOL:http}://${EXTERNAL_HOST:localhost}:${EXTERNAL_PORT:8080}
+  external-realm-url: ${is.external-base-url}/realms/${is.realm}
+
+spring:
+  application:
+    name: test
+  data:
+    mongodb:
+      host: ${DB_HOST:127.0.0.1}
+  main:
+    security:
+      white_list:
+        - /swagger-ui/**
+        - /v3/api-docs/**
+        - /profile/**
+        - /actuator/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${is.realm-url}/protocol/openid-connect/certs
+
 springdoc:
+  show-login-endpoint: true
   swagger-ui:
     path: swagger-ui/index.html
+    oauth:
+      clientId: ${is.client-id}
+      clientSecret: ${is.client-secret}

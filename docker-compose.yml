@@ -1,8 +1,41 @@
 version: "3.9"
 
+x-IS_PROTOCOL: &IS_PROTOCOL ${IS_PROTOCOL:-http}
+x-IS_HOST: &IS_HOST ${IS_HOST:-identity-server}
+x-IS_PORT: &IS_PORT ${IS_PORT:-8080}
+
+x-is-envs: &IS_ENVS
+  IS_PROTOCOL: *IS_PROTOCOL
+  IS_HOST: *IS_HOST
+  IS_PORT: *IS_PORT
+
 services:
   pupil-db:
     image: mongo
     container_name: pupil-db
     ports:
       - "27017:27017"
+  identity-server:
+    image: "quay.io/keycloak/keycloak:18.0.0"
+    container_name: identity-server
+    command:
+      - start-dev --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./volumes/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+    ports:
+      - "8080:8080"
+  pupil-app:
+    build: .
+    container_name: pupil-app
+    environment:
+      <<: *IS_ENVS
+      DB_HOST: pupil-db
+    #      SPRING_PROFILES_ACTIVE: dev-unsecured
+    ports:
+      - "8081:8081"
+    depends_on:
+      - identity-server
+      - pupil-db

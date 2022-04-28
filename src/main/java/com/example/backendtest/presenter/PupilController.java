@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,8 @@ import javax.validation.Valid;
 @RequestMapping("/pupil")
 @RestController
 @AllArgsConstructor
+@SecurityRequirement(name = "secure-api")
+@SecurityRequirement(name = "secure-api2")
 public class PupilController {
     private PupilService service;
     private PupilMapper mapper;

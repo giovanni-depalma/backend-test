@@ -1,4 +1,4 @@
-package com.example.backendtest.core.domain;
+package com.example.backendtest.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

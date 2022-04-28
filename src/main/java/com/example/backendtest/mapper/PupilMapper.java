@@ -1,7 +1,7 @@
 package com.example.backendtest.mapper;
 
-import com.example.backendtest.core.domain.Education;
-import com.example.backendtest.core.domain.Pupil;
+import com.example.backendtest.domain.Education;
+import com.example.backendtest.domain.Pupil;
 import com.example.backendtest.presenter.api.EducationItemResource;
 import com.example.backendtest.presenter.api.PupilRequestResource;
 import com.example.backendtest.presenter.api.PupilResource;
